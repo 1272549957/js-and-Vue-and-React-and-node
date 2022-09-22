@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    函数式编程执行后执行的问题
+        值传递不方便
+        连续调用很麻烦，不清楚顺序
+
+    compose 为了方便我们连续执行方法，把调用传的值封装起来
+        <script>
+            function minusOne(num) {
+                return num - 1
+            }
+            function multiplyTwo(num) {
+                return num * 2
+            }
+            function addTwo(num) {
+                return num + 2
+            }
+            function addThree(num) {
+                return num + 3
+            }
+            // compose 从右往左
+            function compose(){
+                // arguments 获取所有传参 形成的数组对象
+                const args = [].slice.apply(arguments)
+                return function (num) {
+                    // var _result = num
+                    // for (var i = args.length - 1; i >= 0; i-- ){
+                    //     _result = args[i](_result)
+                    // }
+                    return args.reduceRight((res, cb) => {
+                        cb(res)
+                    }, num)
+                    // return _result
+                }
+            }
+            compose(minusOne, multiplyTwo, addTwo, addThree)(10)
+
+            //链式调用
+            Promise.resolve(10).then(minusOne).then(multiplyTwo).then(addTwo).then(addThree).then(res => {
+                console.log(res)
+            })
+        </script>
+
+    pipe函数同理  只不过时从左往右
+
+    链式调用
+</body>
+</html>

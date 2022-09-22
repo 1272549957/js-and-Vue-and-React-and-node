@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    函数式编程提高复用性和可扩展性
+    <script>
+        // 数字X2-1  然后 +2
+        // 面向对象写法
+        function CalcNumber(number){
+            this.number = number
+        }
+        CalcNumber.prototype.calc = function (){
+            return this.num * 2 - 1
+        }
+        function CalcNumberSon(number){
+            CalcNumber.call(this, number)
+        }
+        CalcNumberSon.prototype = new CalcNumber()
+        CalcNumberSon.prototype.calc = function () {
+            return this.num * 2 - 1 + 2
+        }
+        // 函数式写法
+        function multiplyTwo(num) {
+            return num * 2
+        }
+        function minusOne(num) {
+            return num - 1
+        }
+        function addTwo(num) {
+            return num + 2
+        }
+        var num = multiplyTwo(10)
+        num = minusOne(num)
+        num = addTwo(num)
+    </script>
+
+    非常利于Tree-shaking
+        本质是通过文档流的引入判断是否使用某个方法，但是面向对象编程无法记录
+        打包会Tree-shaking掉 已经export但未被使用的函数
+</body>
+</html>
