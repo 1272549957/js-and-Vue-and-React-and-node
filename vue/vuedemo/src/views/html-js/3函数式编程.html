@@ -18,23 +18,25 @@
         function CalcNumberSon(number){
             CalcNumber.call(this, number)
         }
-        CalcNumberSon.prototype = new CalcNumber()
-        CalcNumberSon.prototype.calc = function () {
-            return this.num * 2 - 1 + 2
-        }
-        // 函数式写法
-        function multiplyTwo(num) {
-            return num * 2
-        }
-        function minusOne(num) {
-            return num - 1
-        }
-        function addTwo(num) {
-            return num + 2
-        }
-        var num = multiplyTwo(10)
-        num = minusOne(num)
-        num = addTwo(num)
+
+
+        // CalcNumberSon.prototype = new CalcNumber()
+        // CalcNumberSon.prototype.calc = function () {
+        //     return this.num * 2 - 1 + 2
+        // }
+        // // 函数式写法
+        // function multiplyTwo(num) {
+        //     return num * 2
+        // }
+        // function minusOne(num) {
+        //     return num - 1
+        // }
+        // function addTwo(num) {
+        //     return num + 2
+        // }
+        // var num = multiplyTwo(10)
+        // num = minusOne(num)
+        // num = addTwo(num)
     </script>
 
     非常利于Tree-shaking
