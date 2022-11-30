@@ -6,5 +6,116 @@
 </head>
 <body>
     高阶函数
+        一个函数接收另一个函数作为参数  称之为高阶函数
+    <script>
+
+        // Array.prototype.myForEach = function (callback) {
+        //     var len = this.length
+        //     if (typeof callback !== 'function'){
+        //         throw error('must be function')
+        //     }
+        //     for (var i  =0; i < len; i++){
+        //         callback.call(this, this[i], i)
+        //     }
+        // }
+        // Array.prototype.myMap = function (callback) {
+        //     var len = this.length
+        //     var arr = []
+        //     if (typeof callback !== 'function'){
+        //         throw error('must be function')
+        //     }
+        //     for (var i  =0; i < len; i++){
+        //         arr.push(callback.call(this, this[i], i))
+        //     }
+        //     return arr
+        // }
+        // var arr = [1,2,3]
+        // // pre 上一轮循环返回的值
+        // // now 当前循环的值
+        // // index 当前序列
+        // // arr 总数组
+        // // 累加 累乘
+        // arr.reduce((pre, now, index, arr) => {
+        //     return pre + now;
+        // }, 0) // 0 初始值 没给从数组第0项开始循环
+
+        // 修改对象结构
+        var routes = [
+            {
+                path: '/',
+                components: 'hello'
+            },
+            {
+                path: '/test',
+                components: 'test'
+            }
+        ]
+        let a = routes.reduce((pre, now) => {
+            pre[now.path] = now.components
+            return pre
+        }, {})
+        console.log(a)
+
+        // 所有的all进行累加
+        var allAdd = [
+            {
+                type: 'all',
+                num: 1
+            },
+            {
+                type: 'no',
+                num: 2
+            },
+            {
+                type: 'all',
+                num: 3
+            }
+        ]
+        allAdd.reduce((pre, now, index, arr) => {
+             if (now.type === 'all'){
+                 pre += now.num
+             }
+             return pre
+        }, 0)
+
+        // 手写reduce函数
+        Array.prototype.myReduce = function (fn,init) {
+            var i = 0;
+            var len = this.length
+            var pre = init
+            if (init === undefined){
+                pre = this[0]
+                i = 1
+            }
+            for (i;i<len;i++){
+                pre = fn.call(this, pre, this[i], i, this)
+            }
+            return pre
+        }
+
+        var arr = [1,2,3,4,5,6]
+        arr.filter(res  => {
+            return res % 2 === 0
+        })
+
+        Array.prototype.myFilter = function (fn) {
+            var _nerArray = [];
+            var len = this.length
+            for (var i = 0; i < len; i++){
+                if (fn.call(this,this[i],i)){
+                    if (typeof this[i] === 'object'){
+                        _nerArray.push(Object.create(this[i]))
+                    }else {
+                        _nerArray.push(this[i])
+                    }
+                }
+            }
+            return _nerArray
+        }
+
+        // 高阶函数注意的点
+        // 保持纯函数和减少函数副作用
+        // 调用选择call还是apply
+    </script>
 </body>
 </html>
