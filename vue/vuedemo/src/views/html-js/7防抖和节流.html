@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    防抖
+        高频事件 应当完成后再进行触发
+    事件触发 --> 开启定时器 --> 再次触发，则清除上一次，重开一个 --> 定时到触发操作
+    <input type="text" id="inputid"></input>
+    <script>
+        var inputdom = document.getElementById('inputid')
+        inputdom.oninput=debounce(function (event) {
+            console.log(event.target.value)
+        }, 500)
+        function debounce(fn, delay) {
+            let timer = null
+            return function () {
+                clearTimeout(timer)
+                timer = setTimeout(()=>{
+                    fn.apply(this, arguments)
+                }, delay)
+            }
+        }
+    </script>
+    节流
+        希望上一次完成后再进行下一次或间隔一定时间触发
+    <input type="text" id="inputid2"></input>
+    <button id="sendAxios">请求</button>
+    <script>
+        var inputdom2 = document.getElementById('inputid2')
+        function throttle(fn, delay) {
+            let valid = true
+            return function () {
+                if (valid){
+                    setTimeout(()=>{
+                        fn.apply(this, arguments)
+                        valid = true
+                    }, delay)
+                    valid = false
+                }else {
+                    return false
+                }
+            }
+        }
+        inputdom2.oninput = throttle(function (event) {
+            console.log(event.target.value)
+        }, 500)
+    </script>
+
+    防抖节流相同点
+        都是为了阻止高频触发，从而浪费性能
+    区别
+        防抖是多次触发 只生效一次
+        节流是让你操作  每隔一段时间才能触发
+</body>
+</html>
